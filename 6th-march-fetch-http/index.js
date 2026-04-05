@@ -6,8 +6,9 @@ const app = express();
 
 app.use(express.json());
 
+
 app.get("/", function(req, res) {
-    res.sendFile("/Users/harkirat/Projects/calculator-http-server/index.html");
+    res.sendFile("/Users/abuqais/Desktop/Journey2024/HClass/6th-march-fetch-http/index.html");
 })
 
 app.post("/sum", function(req, res) {
@@ -22,8 +23,19 @@ app.post("/sum", function(req, res) {
 
 })
 
+app.post("/sub", function(req,res){
+    const a = parseInt(req.body.a);
+    const b = parseInt(req.body.b);
 
-app.post("/multiply", function(req, res) {
+    const sub = a - b;
+
+    res.json({
+        ans: sub
+    })
+})
+
+
+app.post("/mul", function(req, res) {
     const a = parseInt(req.body.a); // string 1
     const b = parseInt(req.body.b); // string 2
 
@@ -33,6 +45,16 @@ app.post("/multiply", function(req, res) {
         ans: ans
     })  
 
+})
+
+app.post("/div", function(req,res){
+    const a = parseInt(req.body.a);
+    const b = parseInt(req.body.b);
+
+    const ans = a/b;
+    res.json({
+        ans: ans
+    })
 })
 
 

@@ -1,6 +1,7 @@
 <html>
     <head>
         <script>
+            
             async function add() {
                 const a = document.getElementById("first").value;
                 const b = document.getElementById("second").value;
@@ -19,8 +20,62 @@
                 });
                 const json = await res.json()
                 document.getElementById("response").innerHTML = json.ans;
-
             }
+
+            async function sub() {
+                const a = document.getElementById("first").value;
+                const b = document.getElementById("second").value;
+
+                const res = await fetch("http://localhost:3002/sub/",{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        a: a,
+                        b: b
+                    })
+                })
+                const json = await res.json()
+                document.getElementById("response").innerHTML = json.ans;
+            }
+
+            async function mul() {
+                const a = document.getElementById("first").value;
+                const b = document.getElementById("second").value;
+                
+                const res = await fetch("http://localhost:3002/mul/",{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        a: a,
+                        b: b
+                    })
+                })
+                const json = await res.json()
+                document.getElementById("response").innerHTML = json.ans;
+            }
+
+            async function div() {
+                const a = document.getElementById("first").value;
+                const b = document.getElementById("second").value;
+                
+                const res = await fetch("http://localhost:3002/div/",{
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        a: a,
+                        b: b
+                    })
+                })
+                const json = await res.json()
+                document.getElementById("response").innerHTML = json.ans;
+            }
+
         </script>
     </head>
     <body>
@@ -28,10 +83,9 @@
         <input id="second" type="text" placeholder="second number" />
 
         <button onclick="add()">Add</button>
-        <button>Sub</button>
-        <button>Div</button>
-        <button>Mul</button>
-
+        <button onclick="sub()">Sub</button>
+        <button onclick="div()">Div</button>
+        <button onclick="mul()">Mul</button>
 
         <div id="response"></div>
     </body>

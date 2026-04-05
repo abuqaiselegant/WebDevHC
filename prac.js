@@ -1,12 +1,32 @@
+const express = require("express");
+const app = express();
 
-let todoIndex = 1;
-function addTodo(){
-    const element = document.getElementById("todoInput");
-    const todo = elelment.value;
-    element.value = "";
+app.use(express.json());
 
-    const newDiv = document.createElement("div");
-    newDiv.setAttribute("id","todo"+todoIndex);
-   
-    
-}
+
+const notes = [];
+
+app.post("/notes", (req, res)=>{
+    const note = req.body.note;
+    notes.push(note);
+
+    res.json({
+        message:"Done"
+    });
+})
+
+app.get("/notes",(req, res)=>{
+    res.json({
+        notes
+    })
+})
+
+
+app.get("/",(req, res)=>{
+    res.sendFile("/Users/abuqais/Desktop/Journey2024/HClass/prac.html")
+})
+
+
+app.listen(3002, function(){
+    console.log("Server is running on port 3002");
+});

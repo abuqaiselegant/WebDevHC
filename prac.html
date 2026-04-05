@@ -1,19 +1,87 @@
 <html>
     <head>
-        <title>todo list</title>
-
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
     <body>
-        <h1>Todo List</h1>
-        <div>
-            <input type="text" placeholder = "Add a new todo">
-            <button>Add todo</button>
-        </div>
-        <div>
-            
-        </div>
-    </body>
-    <footer>
+        <div style ="display: flex; justify-content: space between; padding: 0px 100px;"></div>
+        <div id = "notes">Loading...</div>
 
-    </footer>
+        <div>
+            <input type="text" id = "userNote"/>
+            <button onclick = "addTodo()">Create new note</button>
+        </div>
+        <script>
+            async function addTodo(){
+                await axios.post("http://localhost:3000/notes",{
+                    note: document.getElementById("userNote").value
+                })
+                const newNode = document.createElement("div");
+                newNode.innerHTML = document.getElementById("userNote").value;
+                newNode.setAttribute("style", "border: 2px solid black; padding: 10px;")
+                document.getElementById("notes").appendChild(newNode);
+                document.getElementById("userNote").value = "";
+            }
+            async function getTodos(){
+                const response = await axios.get("http://localhost:3000/notes");
+                const notes = response.data.notes;
+                document.getElementById("notes").innerHTML = "";
+                for(let i = 0; i < notes.length; i++){
+                    const noteNote = document.createElement("div");
+                    noteNote.innerHTML = notes[i];
+                    noteNote.setAttribute("style", "border: 2px solid black; padding: 10px;")
+                    document.getElementById("notes").appendChild(noteNote);
+                }
+            }
+            getTodos();
+        </script>
+    </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <html>
+    <head>
+        <script>
+            async function add(){
+                const a = document.getElementById("first").value;
+                const b = document.getElementById("second").value;
+                const res = await fetch("http://localhost:3002/sum/",{
+                    method : "POST",
+                    headers : {
+                        "Content-Type" : "application/json"
+                    },
+                    body : JSON.stringify({
+                        a: a,
+                        b: b
+                    })
+                });
+                const json = await res.json()
+                document.getElementById("response").innerHTML = json.ans;
+            }
+        </script>
+
+    </head>
+
+    <body>
+        <input id = "first" type="text" placeholder="Enter first number">
+        <input id = "second"type="text" placeholder="Enter second number">
+
+        <button onclick = "add()">ADD</button>
+        <button onclick = "sub()">SUB</button>
+        <button onclick = "mul()">MUL</button>
+        <button onclick = "div()">DIV</button>
+        
+        <div id = "response"></div>
+    </body>
+</html> -->
