@@ -1,25 +1,43 @@
+const exprees = require("express");
+
+
 const users = [{
-    id: 1,  //uniueness constraint
+    id: 1,  //uniqueness constraint
     username: "Alina",
     password: "alinachintu123"
 },
 {
-    id:2,  //uniueness constraint
+    id:2,  //uniqueness constraint
     username: "Monazza",
     password: "minu123"
-}];
+},
+{
+    id:3,  //uniqueness constraint
+    username: "Insha",
+    password: "pp123"
+},
+];
+
 const organizations = [{
     organizationId: 1, //uniqueness constraint
-    title:"",
-    desctipiton:"",
-    members:[],
+    title:"100xdevs",
+    desctipiton:"Learning coding platform",
+    members:1,
+    admins:[2],
+}, {
+    organizationId: 2, //uniqueness constraint
+    title:"raman org",
+    desctipiton:"Experimenting",
+    members:1,
     admins:[],
 }];
+
 const boards = [{
     id: 1,
     title:"",
     organizationId: 1,
 }];
+
 const issues = [{
     id: 1,
     title:"Add dark mode",
@@ -32,3 +50,5 @@ const issues = [{
 
 
 
+const app = express();
+app.listen(3000);
