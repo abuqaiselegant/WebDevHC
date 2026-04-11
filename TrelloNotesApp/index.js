@@ -93,16 +93,16 @@ app.post("/organization",authMiddleware,(req,res)=>{
 app.post("add-member-to-organization",authMiddleware,(req,res)=>{
     const userId = req.userId;
     const organizationId = req.body.organizationId;
-    const memberId = req.body.memberId;
+    const memberUsername = req.body.memberUsername;
 
     const organization = ORGANIZATIONS.find(org =>org.id === organizationId);
-    if (!orgainzation){
-        res.status(404).json({
-            message:"organization not found!"
+    if (!orgainzation || organization.admin !== userId){
+        res.status(411).json({
+            message:"organization not found or you are not an admin!"
         })
         return;
     }
-    const member = USERS.find(u => u.id === memberId);
+    const memberUser = USERS.find(u => u.username === memberUsername);
     if (!member){
         res.status(403).json({
             message:"member not in our database!"
@@ -110,6 +110,9 @@ app.post("add-member-to-organization",authMiddleware,(req,res)=>{
         return;
     }
     organization.members.push(memberId);
+    res.json({
+        message:"member added"
+    })
 })
 
 app.post("/board",(req,res)=>{
@@ -138,7 +141,27 @@ app.put("/issues",(req,res)=>{
 
 })
 
-app.delete("/members",(req,res)=>{
-
+app.delete("/members",authMiddleware,(req,res)=>{
+    const userId = req.userId;
+    const organisationId = req.body.organizationId;
+    const memberUsername = req.body.memberUsername;
+    const organization = ORGANIZATIONS.find(org =>org.id === organizationId);
+    if (!orgainzation || organization.admin !== userId){
+        res.status(411).json({
+            message:"organization not found or you are not an admin!"
+        })
+        return;
+    }
+    const memberUser = USERS.find(u => u.username === memberUsername);
+    if (!member){
+        res.status(403).json({
+            message:"member not in our database!"
+        })
+        return;
+    }
+    organization.members = organization.members.filter(user => user.id !== memberUser.id);
+    res.json({
+        message:"member removed"
+    })
 })
 app.listen(3005);
