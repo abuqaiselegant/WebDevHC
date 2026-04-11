@@ -9,19 +9,7 @@ let boardId =1;
 
 const USERS = [];
 
-const ORGANIZATIONS = [{
-    organizationId: 1, //uniqueness constraint
-    title:"100xdevs",
-    desctipiton:"Learning coding platform",
-    members:1,
-    admins:[2],
-}, {
-    organizationId: 2, //uniqueness constraint
-    title:"raman org",
-    desctipiton:"Experimenting",
-    members:1,
-    admins:[],
-}];
+const ORGANIZATIONS = [];
 
 const BOARDS = [{
     id: 1,
@@ -104,7 +92,24 @@ app.post("/organization",authMiddleware,(req,res)=>{
 
 app.post("add-member-to-organization",authMiddleware,(req,res)=>{
     const userId = req.userId;
+    const organizationId = req.body.organizationId;
+    const memberId = req.body.memberId;
 
+    const organization = ORGANIZATIONS.find(org =>org.id === organizationId);
+    if (!orgainzation){
+        res.status(404).json({
+            message:"organization not found!"
+        })
+        return;
+    }
+    const member = USERS.find(u => u.id === memberId);
+    if (!member){
+        res.status(403).json({
+            message:"member not in our database!"
+        })
+        return;
+    }
+    organization.members.push(memberId);
 })
 
 app.post("/board",(req,res)=>{
