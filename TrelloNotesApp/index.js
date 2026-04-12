@@ -124,9 +124,42 @@ app.post("/issue",(req,res)=>{
 })
 
 
-//read
-app.get("/boards",(req,res)=>{
+//read - get endpoints
 
+app.get("/organization", authMiddleware, (req,res)=>{
+    const userId = req.userId;
+    const organizationId = parseInt(req.query.organizationId);
+    const organization = ORGANIZATIONS.find(o => o.id === organizationId);
+
+    if (!organization || organization.admin !== userId){
+        res.status(411).json({
+            message:"Either organization not found or you are not an admin!"
+        })
+        return;
+    }
+    res.json({
+        organization: {
+            ...organization, 
+            members: organization.members.map(memberId => {
+                const user = USERS.find(u => u.id === memberId);
+                return {id: user.id , username : user.username}
+            })
+        }
+    })
+})
+//GET /boards?organizationId=1
+//more to do
+app.get("/boards",authMiddleware,(req,res)=>{
+    const userId = req.userId;
+    const organizationId = parseInt(req.query.organizationId);
+    const organization = ORGANIZATIONS.find(o => o.id === organizationId);
+    if (!organization || organization.admin !== userId){
+        res.status(411).json({
+            message:"Either organization not found or you are not an admin!"
+        })
+        return;
+    }
+    res.json({})
 })
 
 app.get("/issues",(req,res)=>{
