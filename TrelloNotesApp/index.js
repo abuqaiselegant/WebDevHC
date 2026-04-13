@@ -1,15 +1,15 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const {authMiddleware} = require("./middleware")
+const {authMiddleware} = require("./middleware");
+const {userModel, organizationModel} = require("./models");
 
-let userId = 1;
-let organizationId = 1;
+// let userId = 1;
+// let organizationId = 1;
 let issueId = 1;
 let boardId =1;
 
-const USERS = [];
-
-const ORGANIZATIONS = [];
+// const USERS = [];
+// const ORGANIZATIONS = [];
 
 const BOARDS = [{
     id: 1,
@@ -22,12 +22,7 @@ const ISSUES = [{
     title:"Add dark mode",
     boardId: 1,
     state:"inprogress",
-}, {
-    id:2,
-    title:"Allow admins to create boards",
-    boardId: 1,
-    state:"done",
-}];
+} ];
 
 
 const app = express();
@@ -35,32 +30,39 @@ app.use(express.json());
 
 //writing routes
 //create
-app.post("/signup", (req,res)=>{
+app.post("/signup", async(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
 
-    const userExists = USERS.find(u => u.username === username);
+    // const userExists = USERS.find(u => u.username === username);
+    const userExists = await userModel.findOne({username: username});
+
     if (userExists) {
         res.status(411).json({
             message: "user already exists"
         })
         return;
     }
-    USERS.push({
-        id: userId++,
-        username,
-        password,
-    })
+    // USERS.push({
+    //     id: userId++,
+    //     username,
+    //     password,
+    // })
+    const newUser = await userModel.create({username, password})
     res.json({
         message: "user created successfully",
     })
 
 })
 
-app.post("/signin",(req,res)=>{
+app.post("/signin",async(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
-    const userExists = USERS.find(u => u.username === username && u.password === password);
+    // const userExists = USERS.find(u => u.username === username && u.password === password);
+    const userExist = await userModel.findOne({
+        username: username,
+        password: password
+    })
     if (!userExists){
         res.status(401).json({
             message:"invalid ceredentials!"
@@ -74,18 +76,24 @@ app.post("/signin",(req,res)=>{
 
 })
 
-app.post("/organization",authMiddleware,(req,res)=>{
+app.post("/organization",authMiddleware,async(req,res)=>{
     const userId = req.userId;
-    ORGANIZATIONS.push({
-        id: organizationId++, //uniqueness constraint
-        title:req.body.title,
-        desctipiton:req.body.description,
-        members:userId,
-        admins:[],
+    // ORGANIZATIONS.push({
+    //     id: organizationId++, //uniqueness constraint
+    //     title:req.body.title,
+    //     desctipiton:req.body.description,
+    //     members:userId,
+    //     admins:[],
+    // })
+    const newOrg = await organizationModel.create({
+        title: req.body.title,
+        description: req.body.description,
+        admin: userId,
+        members: []
     })
     res.json({
         message:"organization created successfully",
-        id: organizationId-1,
+        id: newOrg._id
     })
 
 })
