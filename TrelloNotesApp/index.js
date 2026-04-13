@@ -98,26 +98,40 @@ app.post("/organization",authMiddleware,async(req,res)=>{
 
 })
 
-app.post("add-member-to-organization",authMiddleware,(req,res)=>{
+app.post("add-member-to-organization",authMiddleware,async(req,res)=>{
     const userId = req.userId;
     const organizationId = req.body.organizationId;
     const memberUsername = req.body.memberUsername;
 
-    const organization = ORGANIZATIONS.find(org =>org.id === organizationId);
-    if (!orgainzation || organization.admin !== userId){
+    // const organization = ORGANIZATIONS.find(org =>org.id === organizationId);
+
+    const organization = await organizationModel.findOne({
+        _id: organizationId
+    });
+
+    if (!organization || organization.admin.toString() !== userId){
         res.status(411).json({
             message:"organization not found or you are not an admin!"
         })
         return;
     }
-    const memberUser = USERS.find(u => u.username === memberUsername);
+    // const memberUser = USERS.find(u => u.username === memberUsername);
+    const memberUser = await userModel.findOne({
+        username: memberUsername
+    });
     if (!member){
         res.status(403).json({
             message:"member not in our database!"
         })
         return;
     }
-    organization.members.push(memberId);
+    // organization.members.push(memberId);
+    // res.json({
+    //     message:"member added"
+    // })
+
+    organization.members.push(memberUser._id);
+    await organization.save();
     res.json({
         message:"member added"
     })
@@ -134,10 +148,13 @@ app.post("/issue",(req,res)=>{
 
 //read - get endpoints
 
-app.get("/organization", authMiddleware, (req,res)=>{
+app.get("/organization", authMiddleware, async (req,res)=>{
     const userId = req.userId;
     const organizationId = parseInt(req.query.organizationId);
-    const organization = ORGANIZATIONS.find(o => o.id === organizationId);
+    // const organization = ORGANIZATIONS.find(o => o.id === organizationId);
+    const organization = await organizationModel.findOne({
+        _id: organizationId
+    });
 
     if (!organization || organization.admin !== userId){
         res.status(411).json({
@@ -145,13 +162,26 @@ app.get("/organization", authMiddleware, (req,res)=>{
         })
         return;
     }
+    const members = await userModel.find({
+        _id: organization.members
+    })
+    // res.json({
+    //     organization: {
+    //         ...organization, 
+    //         members: organization.members.map(memberId => {
+    //             const user = USERS.find(u => u.id === memberId);
+    //             return {id: user.id , username : user.username}
+    //         })
+    //     }
+    // })
     res.json({
         organization: {
-            ...organization, 
-            members: organization.members.map(memberId => {
-                const user = USERS.find(u => u.id === memberId);
-                return {id: user.id , username : user.username}
-            })
+            title: organization.tilte,
+            description: organization.description,
+            members: members.map(m => ({
+                username: m.username,
+                id: m._id
+            }))
         }
     })
 })
@@ -182,25 +212,33 @@ app.put("/issues",(req,res)=>{
 
 })
 
-app.delete("/members",authMiddleware,(req,res)=>{
+app.delete("/members",authMiddleware,async (req,res)=>{
     const userId = req.userId;
-    const organisationId = req.body.organizationId;
+    const organizationId = req.body.organizationId;
     const memberUsername = req.body.memberUsername;
-    const organization = ORGANIZATIONS.find(org =>org.id === organisationId);
-    if (!orgainzation || organization.admin !== userId){
+    // const organization = ORGANIZATIONS.find(org =>org.id === organisationId);
+    const organization = await organizationModel.findOne({
+        _id: organizationId
+    });
+    if (!organization || organization.admin !== userId){
         res.status(411).json({
             message:"organization not found or you are not an admin!"
         })
         return;
     }
-    const memberUser = USERS.find(u => u.username === memberUsername);
-    if (!member){
+    // const memberUser = USERS.find(u => u.username === memberUsername);
+    const memberUser = await userModel.findOne({
+        username: memberUsername
+    });
+    if (!memberUser){
         res.status(403).json({
             message:"member not in our database!"
         })
         return;
     }
-    organization.members = organization.members.filter(user => user.id !== memberUser.id);
+    // organization.members = organization.members.filter(user => user.id !== memberUser.id);
+    organization.members = organization.members.filter(x => x.toString() !== memberUser._id.toString());
+    await organization.save();
     res.json({
         message:"member removed"
     })
