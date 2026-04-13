@@ -178,7 +178,7 @@ app.delete("/members",authMiddleware,(req,res)=>{
     const userId = req.userId;
     const organisationId = req.body.organizationId;
     const memberUsername = req.body.memberUsername;
-    const organization = ORGANIZATIONS.find(org =>org.id === organizationId);
+    const organization = ORGANIZATIONS.find(org =>org.id === organisationId);
     if (!orgainzation || organization.admin !== userId){
         res.status(411).json({
             message:"organization not found or you are not an admin!"
