@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect("");
-
+mongoose.connect("mongodb+srv://sk_db_user:1XrSoPIxQEFa7u06@cluster1.81hju9s.mongodb.net/trello_app")
 
 const userSchema = mongoose.Schema({
     username: String,
@@ -14,7 +13,7 @@ const organizationSchema = mongoose.Schema({
     admin: [mongoose. Types.ObjectId]
 })
 
-const organizationModel = mongoose.model("organizations", orgainzationSchema);
+const organizationModel = mongoose.model("organizations", organizationSchema);
 const userModel = mongoose.model("users", userSchema)
 
 module.exports = {

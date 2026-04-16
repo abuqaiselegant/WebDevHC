@@ -6,10 +6,10 @@ function authMiddleware(req,res, next){
     const decoded = jwt .verify(token, "secretkey123");
     const userId = decoded.userId;
     if (userId){
-        req.userId;
+        req.userId = userId;
         next();
     }else{
-        res.json({
+        res.status(403).json({
             message:"incorrect token!"
         })
     }

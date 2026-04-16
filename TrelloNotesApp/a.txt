@@ -1,0 +1,4 @@
+1XrSoPIxQEFa7u06
+sk_db_user
+
+mongodb+srv://sk_db_user:1XrSoPIxQEFa7u06@cluster1.81hju9s.mongodb.net/
