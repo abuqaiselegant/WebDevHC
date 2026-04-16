@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://sk_db_user:1XrSoPIxQEFa7u06@cluster1.81hju9s.mongodb.net/trello_app")
+mongoose.connect("mongodb+srv://sk_db_user:@cluster1.81hju9s.mongodb.net/trello_app")//no pwd
 
 const userSchema = mongoose.Schema({
     username: String,
