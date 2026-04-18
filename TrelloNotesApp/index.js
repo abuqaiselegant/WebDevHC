@@ -200,7 +200,9 @@ app.get("/boards",authMiddleware,async(req,res)=>{
         })
         return;
     }
-    res.json({})
+    res.json(400,{
+        message:"No boards found"
+    })
 })
 
 app.get("/issues",(req,res)=>{
