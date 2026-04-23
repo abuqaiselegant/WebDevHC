@@ -2,3 +2,5 @@
 sk_db_user
 
 mongodb+srv://sk_db_user:1XrSoPIxQEFa7u06@cluster1.81hju9s.mongodb.net/
+
+postgresql://neondb_owner:npg_u9LR2regYicF@ep-soft-glitter-anrqffek-pooler.c-6.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
