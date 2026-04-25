@@ -22,10 +22,18 @@ const userSchema = mongoose.Schema({
   });
 
 const organizationSchema = mongoose.Schema({
-    name: String,
+    name: {
+        type: String, 
+        required: true
+    },
     description: String,
-    members: [mongoose. Types.ObjectId],
-    admin: [mongoose. Types.ObjectId],
+    members: [{type: mongoose.Types.ObjectId,
+        ref: 'User'
+    }],
+    admin: [{
+        type: mongoose.Types.ObjectId,
+        ref: "User"
+    }],
     createdAt: {
       type: Date,
       default: Date.now
@@ -33,28 +41,53 @@ const organizationSchema = mongoose.Schema({
   });
 
 const BoardsSchema = mongoose.Schema({
-    name: String,
-    organizationId: orgId,
+    name: {
+        type:String,
+        required: true},
+    organizationId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'organisation',
+        required:true},
     createdAt: {
       type: Date,
       default: Date.now
     }
   });
-const CardSchema = mongoose.Schema({
-    listId: listId,
+  const CardSchema = mongoose.Schema({ 
+    listId: {  
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'List',
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
     description: String,
-    title:String,
-    position: Number,
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    position: {
+      type: Number,
+      default: 0
+    },
     createdAt: {
       type: Date,
       default: Date.now
     }
   });
-
   const ListSchema = mongoose.Schema({
-    title: String,
-    boardId: String,
-    position: Number,
+    title: {type: String,
+            required: true},
+    boardId: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'Board',
+        required: true
+    },
+    position: {
+        type: Number,
+        default : 0},
     createdAt: {
       type: Date,
       default: Date.now
@@ -65,7 +98,7 @@ const CardSchema = mongoose.Schema({
 const organizationModel = mongoose.model("organizations", organizationSchema);
 const userModel = mongoose.model("users", userSchema)
 const boardsModel = mongoose.model("boards", BoardsSchema);
-const cardModel = mongoose.model("users", CardSchema)
+const cardModel = mongoose.model("cards", CardSchema)
 const listModel = mongoose.model("lists", ListSchema);
 
 
