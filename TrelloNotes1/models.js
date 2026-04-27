@@ -40,7 +40,7 @@ const organizationSchema = mongoose.Schema({
     }
   });
 
-const BoardsSchema = mongoose.Schema({
+const boardsSchema = mongoose.Schema({
     name: {
         type:String,
         required: true},
@@ -53,7 +53,7 @@ const BoardsSchema = mongoose.Schema({
       default: Date.now
     }
   });
-  const CardSchema = mongoose.Schema({ 
+  const cardSchema = mongoose.Schema({ 
     listId: {  
       type: mongoose.Schema.Types.ObjectId,
       ref: 'List',
@@ -77,7 +77,7 @@ const BoardsSchema = mongoose.Schema({
       default: Date.now
     }
   });
-  const ListSchema = mongoose.Schema({
+  const listSchema = mongoose.Schema({
     title: {type: String,
             required: true},
     boardId: {
@@ -97,9 +97,9 @@ const BoardsSchema = mongoose.Schema({
 
 const organizationModel = mongoose.model("organizations", organizationSchema);
 const userModel = mongoose.model("users", userSchema)
-const boardsModel = mongoose.model("boards", BoardsSchema);
-const cardModel = mongoose.model("cards", CardSchema)
-const listModel = mongoose.model("lists", ListSchema);
+const boardsModel = mongoose.model("boards", boardsSchema);
+const cardModel = mongoose.model("cards", cardSchema)
+const listModel = mongoose.model("lists", listSchema);
 
 
 
