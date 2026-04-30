@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://sk_db_user:1XrSoPIxQEFa7u06@cluster1.81hju9s.mongodb.net/trello_n")
+mongoose.connect("mongodb+srv://sk_db_user:1XrSoPIxQEFa7u06@cluster1.81hju9s.mongodb.net/TrelloNotes1")
 
 const userSchema = mongoose.Schema({
     email: {
@@ -40,7 +40,7 @@ const organizationSchema = mongoose.Schema({
     }
   });
 
-const boardsSchema = mongoose.Schema({
+const boardSchema = mongoose.Schema({
     name: {
         type:String,
         required: true},
@@ -95,15 +95,11 @@ const boardsSchema = mongoose.Schema({
   });
 
 
-const organizationModel = mongoose.model("organizations", organizationSchema);
-const userModel = mongoose.model("users", userSchema)
-const boardsModel = mongoose.model("boards", boardsSchema);
-const cardModel = mongoose.model("cards", cardSchema)
-const listModel = mongoose.model("lists", listSchema);
-
-
-
-
-
+const organizationModel = mongoose.model("Organizations", organizationSchema);
+const userModel = mongoose.model("User", userSchema)
+const boardModel = mongoose.model("Board", boardSchema);
+const cardModel = mongoose.model("Card", cardSchema)
+const listModel = mongoose.model("List", listSchema);
   
 
+module.exports = { userModel, organizationModel, boardModel, cardModel, listModel };
