@@ -18,6 +18,7 @@ app.use(express.json());
 app.post("/signup",async (req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
+    const email = req.body.email;
 
     const userExist = await userModel.findOne({username: username})
     if (userExist){
@@ -26,7 +27,7 @@ app.post("/signup",async (req,res)=>{
         })
         return;
     }
-    const newUser = await userModel.create({username, password})
+    const newUser = await userModel.create({username, password, email})
     res.json({
         message:"user created successfully"
     })
@@ -37,8 +38,15 @@ app.post("/signin",async(req,res)=>{
     const username = req.body.username;
     const password = req.body.password;
 
-    const
-
+    const userExist = await userModel.findOne({username: username, password: password})
+    if (!userExist){
+        res.json(401).json({
+            message:"invalid credential"
+        })
+        return;
+    }
+    const token = jwt.sign({userId: userExist._id}, "secretkey123");
+    res.json({token})
 })
 
 app.get("/users/:id",(req,res)=>{
