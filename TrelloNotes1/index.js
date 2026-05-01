@@ -5,7 +5,7 @@
 //cards Table
 
 const express = require("express");
-const {userModel, organizationModel} = require("./models")
+const {userModel, organizationModel, boardModel} = require("./models")
 
 //issueId
 //boardid
@@ -118,6 +118,21 @@ app.post("/add-member-to-organization", async (req,res)=>{
 
 
 app.post("/boards",(req,res)=>{
+    const name = req.body.name;
+    const organizationId = req.body.organisationId;
+
+    const org = organizationModel.findOne({_id:organizationId});
+    if (!org){
+        res.status(400).json({
+            message:"org not found"
+        })
+        return ;
+    }
+    const newBoard = new boardModel({
+        name : "questions",
+        organizationId: organizationId
+    })
+
 
 })
 
