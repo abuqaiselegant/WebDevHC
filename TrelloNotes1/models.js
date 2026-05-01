@@ -46,7 +46,7 @@ const boardSchema = mongoose.Schema({
         required: true},
     organizationId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'organisation',
+        ref: 'Organizations',
         required:true},
     createdAt: {
       type: Date,

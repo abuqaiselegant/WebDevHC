@@ -45,8 +45,8 @@ app.post("/signin",async(req,res)=>{
         })
         return;
     }
-    const token = jwt.sign({userId: userExist._id}, "secretkey123");
-    res.json({token})
+    // const token = jwt.sign({userId: userExist._id}, "secretkey123");
+    // res.json({token})
     res.status(200).json({message:"login success"})
 })
 
@@ -64,7 +64,7 @@ app.post("/organizations",async (req,res)=>{
         name,
         description,
         members:[adminId],
-        admin:[adminId]
+        admins:[adminId]
     })
     await org.save();
     res.json({
@@ -83,21 +83,30 @@ app.post("/add-member-to-organization", async (req,res)=>{
     const organisationId = req.body.organisationId;
     const memberUsername = req.body.memberUsername;
 
-    if(!userId || !organisationId || ! memberUsername){
+    if(!userId || !organisationId || !memberUsername){
         return res.status(400).json({
             message: "required field not found!"
         })
     }
     
     const organization = await organizationModel.findOne({
-        orgid: organisationId
+        _id: organisationId
     })
     if (!organization){
-        res.status(411).json({
+        res.status(404).json({
             message: "organization not found"
         })
-        return
+        return;
     }
+    const memberUser = await userModel.findOne({
+        username : memberUsername
+    })
+    if(!memberUser){
+        return res.status(404).json({
+            message:"user not found"
+        })
+    }
+
     organization.members.push(memberUser._id);
     await organization.save();
 
