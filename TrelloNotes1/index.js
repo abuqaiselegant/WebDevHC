@@ -72,7 +72,38 @@ app.post("/organizations",async (req,res)=>{
     })
 })
 
-app.get("/organizations/:id",(req,res)=>{
+app.get("/organizations",async(req,res)=>{
+    const orgs = await organizationModel.find();
+    res.json(orgs)
+
+})
+
+app.post("/add-member-to-organization", async (req,res)=>{
+    const userId = req.body.userId;
+    const organisationId = req.body.organisationId;
+    const memberUsername = req.body.memberUsername;
+
+    if(!userId || !organisationId || ! memberUsername){
+        return res.status(400).json({
+            message: "required field not found!"
+        })
+    }
+    
+    const organization = await organizationModel.findOne({
+        orgid: organisationId
+    })
+    if (!organization){
+        res.status(411).json({
+            message: "organization not found"
+        })
+        return
+    }
+    organization.members.push(memberUser._id);
+    await organization.save();
+
+    res.json({
+        message:"member added succssfully"
+    })
 
 })
 
