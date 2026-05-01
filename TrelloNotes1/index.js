@@ -5,7 +5,7 @@
 //cards Table
 
 const express = require("express");
-
+const {userModel, organizationModel} = require("./models")
 
 //issueId
 //boardid
@@ -35,26 +35,41 @@ app.post("/signup",async (req,res)=>{
 })
 
 app.post("/signin",async(req,res)=>{
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
-    const userExist = await userModel.findOne({username: username, password: password})
-    if (!userExist){
-        res.json(401).json({
+    const userExist = await userModel.findOne({email: email})
+    if (!userExist || userExist.password !== password){
+        res.status(401).json({
             message:"invalid credential"
         })
         return;
     }
     const token = jwt.sign({userId: userExist._id}, "secretkey123");
     res.json({token})
+    res.status(200).json({message:"login success"})
 })
 
 app.get("/users/:id",(req,res)=>{
 
+
 })
 
-app.post("/organizations",(req,res)=>{
+app.post("/organizations",async (req,res)=>{
+    const name = req.body.name;
+    const description = req.body.description;
+    const adminId = req.body.id;
 
+    const org = new organizationModel({
+        name,
+        description,
+        members:[adminId],
+        admin:[adminId]
+    })
+    await org.save();
+    res.json({
+        message:"organization created successfully"
+    })
 })
 
 app.get("/organizations/:id",(req,res)=>{
@@ -82,7 +97,7 @@ app.post("/cards",(req,res)=>{
 
 })
 
-app.post("/cards/:listId")
+app.post("/cards/:listId",(req,res)=>{})
 
 
 
