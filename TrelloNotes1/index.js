@@ -50,9 +50,16 @@ app.post("/signin",async(req,res)=>{
     res.status(200).json({message:"login success"})
 })
 
-app.get("/users/:id",(req,res)=>{
-
-
+app.get("/users/:id",async(req,res)=>{
+    const {id}  = req.params.id;
+    const user = await userModel.findOne({_id:id});
+    if (!user){
+        res.status(404).json({
+            message:"user not found"
+        })
+        return;
+    }
+    res.json(user)
 })
 
 app.post("/organizations",async (req,res)=>{
@@ -117,10 +124,10 @@ app.post("/add-member-to-organization", async (req,res)=>{
 })
 
 
-app.post("/boards",(req,res)=>{
+app.post("/boards",async(req,res)=>{
     const name = req.body.name;
-    const organizationId = req.body.organisationId;
-
+    const organizationId = req.body.organizationId;
+//  const user = await userModel.findById(id).select('-password');  // Don't send password!
     const org = organizationModel.findOne({_id:organizationId});
     if (!org){
         res.status(400).json({
@@ -132,11 +139,23 @@ app.post("/boards",(req,res)=>{
         name : "questions",
         organizationId: organizationId
     })
+    await newBoard.save();
+    res.json({
+        message:"board created successfully"
+    })
 
 
 })
 
-app.get("/boards/:orgId",(req,res)=>{
+app.get("/boards/:orgId",async(req,res)=>{
+    const orgId = req.params.orgId;
+    const boards = await boardModel.findOne({_id : orgId})
+
+    if (!boards){
+        res.status(404)
+        return;
+    }
+    res.json(boards);
 
 })
 
