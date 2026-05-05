@@ -160,7 +160,7 @@ app.get("/boards/:orgId",async(req,res)=>{
 })
 
 app.post("/lists",(req,res)=>{
-
+    
 })
 
 app.get("/lists/:boardId",(req,res)=>{
