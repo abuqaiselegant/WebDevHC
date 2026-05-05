@@ -159,12 +159,36 @@ app.get("/boards/:orgId",async(req,res)=>{
 
 })
 
-app.post("/lists",(req,res)=>{
-    
+app.post("/lists",async (req,res)=>{
+    const name = req.body.name;
+    const boardId = req.body.boardId;
+    const board = await boardModel.findOne({_id:boardId})
+    if(!board){
+        res.status(404).json({
+            message:"board not found"
+        })
+        return;
+    }
+    const newList = new listModel({
+        name,
+        boardId:boardId
+    })
+    await newList.save();
+    res.json({
+        messge:"successfully created list"
+    })
 })
 
 app.get("/lists/:boardId",(req,res)=>{
-
+    const boardId = req.params.boardId;
+    const lists = await listModel.find({boardid: boardId})
+    if(!lists){
+        res.status(404).json({
+            message:"lissts not found"
+        })
+        return;
+    }
+    res.json(lists);
 })
 
 app.post("/cards",(req,res)=>{
@@ -172,12 +196,6 @@ app.post("/cards",(req,res)=>{
 })
 
 app.post("/cards/:listId",(req,res)=>{})
-
-
-
-
-
-
 
 
 
