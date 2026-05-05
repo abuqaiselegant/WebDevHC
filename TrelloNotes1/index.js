@@ -179,7 +179,7 @@ app.post("/lists",async (req,res)=>{
     })
 })
 
-app.get("/lists/:boardId",(req,res)=>{
+app.get("/lists/:boardId",async(req,res)=>{
     const boardId = req.params.boardId;
     const lists = await listModel.find({boardid: boardId})
     if(!lists){
