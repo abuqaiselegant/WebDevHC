@@ -191,8 +191,25 @@ app.get("/lists/:boardId",async(req,res)=>{
     res.json(lists);
 })
 
-app.post("/cards",(req,res)=>{
+app.post("/cards",async(req,res)=>{
+    const title = req.body.title;
+    const listId = req.body.listId;
 
+    const list = await listModel.findOne({_id:listId})
+    if(!list){
+        res.status(404).json({
+            message:"list not found"
+        })
+    }
+    const newCard = new cardModel({
+        title,
+        description,
+        listId:listId
+    })
+    await newCard.save();
+    res.json({
+        message:"card created successfully"
+    })
 })
 
 app.post("/cards/:listId",(req,res)=>{})
