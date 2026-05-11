@@ -212,7 +212,26 @@ app.post("/cards",async(req,res)=>{
     })
 })
 
-app.post("/cards/:listId",(req,res)=>{})
+app.post("/cards/:listId",async(req,res)=>{
+    const title = req.body.title;
+    const description = req.body.description;
+    const listId = req.params.listId;
+    const list = await listModel.findOne({_id:listId})
+    if(!list){
+        res.status(404).json({
+            message:"list not found"
+        })
+        return;
+    }
+    const newCard = new cardModel({
+        title, 
+        description,
+        listId:listId
+    })
+    await newCard.save()
+    res.json({message:"card creatd successfully"})
+    
+})
 
 
 
