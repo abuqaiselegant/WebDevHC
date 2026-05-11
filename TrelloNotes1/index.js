@@ -194,12 +194,14 @@ app.get("/lists/:boardId",async(req,res)=>{
 app.post("/cards",async(req,res)=>{
     const title = req.body.title;
     const listId = req.body.listId;
+    const description = req.body.description;
 
     const list = await listModel.findOne({_id:listId})
     if(!list){
         res.status(404).json({
             message:"list not found"
         })
+        return 
     }
     const newCard = new cardModel({
         title,
