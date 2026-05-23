@@ -4,20 +4,34 @@ import Food from './Food.jsx'
 import Card from './Card.jsx'
 import Student from './Student.jsx'
 import List from './List.jsx'
+
 function App() {
+  const fruits = [{id:1, name:"apple",calories:953},
+                  {id:2, name:"orange",calories:915},
+                  {id:3, name:"banana",calories:9511},
+                  {id:4, name:"coconut",calories:935},
+                  {id:5, name:"pineapple",calories:951}];
 
-  return (
-    <>
-      <Header/>
-      <Card/>
-      <Student name ="Umar" age ={26} isStudent = {true}></Student>
-      <Student name ="Abu" age ={26} isStudent = {true}></Student>
-      <Student name ="anabiya" age ={6} isStudent = {false}></Student>
-      <Student name ="rimpo" age ={16} isStudent = {true}></Student>
-      <List/>
+  const Vegetables = [{id:1, name:"potato",calories:953},
+                  {id:2, name:"onion",calories:95},
+                  {id:3, name:"celery",calories:511},
+                  {id:4, name:"carrots",calories:35},
+                  {id:5, name:"pinee",calories:91}];
 
-    </>
+  return (<>
+        {/* {fruits.length > 0 ? <List items ={fruits} category ="Fruits"/> : null}
+        {Vegetables.length > 0 ? <List items ={Vegetables} category ="Vegetables"/>:null} */
+        fruits.length >0 && <List items ={fruits} category ="fruits"/>}
+       {Vegetables.length >0 && <List items ={Vegetables} category ="Vegetables"/>
+}
+        </>
   );
 }
 
 export default App
+
+/* <Header/>
+      <Card/>
+      <Student name ="Umar" age ={26} isStudent = {true}></Student>
+      <List/>
+      <fruits/> */
