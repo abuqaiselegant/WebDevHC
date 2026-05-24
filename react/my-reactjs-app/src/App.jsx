@@ -15,8 +15,9 @@ function App() {
   const Vegetables = [{id:1, name:"potato",calories:953},
                   {id:2, name:"onion",calories:95},
                   {id:3, name:"celery",calories:511},
-                  {id:4, name:"carrots",calories:35},
-                  {id:5, name:"pinee",calories:91}];
+                  {id:4, name:"lokki",calories:315},
+                  {id:5, name:"carrots",calories:35},
+                  {id:6, name:"pinee",calories:91}];
 
   return (<>
         {/* {fruits.length > 0 ? <List items ={fruits} category ="Fruits"/> : null}
