@@ -1,6 +1,7 @@
 import Header from './Header'
 import Footer from './Footer'
-import UserCard from './UserCard'
+import UserCard from './components/UserCard'
+import ProductCard from './components/ProductCard'
 
 function App(){
   return (
@@ -11,9 +12,9 @@ function App(){
       <Header/>
       <UserCard name="Qais" age ={26} city="london" isPremium = {true} />
       <UserCard name="s khan" age ={24} city="london" isPremium = {false} />
-      <UserCard name="m ameer" age ={27} city="london" isPremium = {false} />
+      <UserCard name="m ameer" age ={33} city={"london"} isPremium = {false} />
+      <ProductCard title="Cosmic star" price ={1443} inStock = {true}/>
       <Footer/>
-
     </>
     
   )
