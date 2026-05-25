@@ -39,10 +39,12 @@ console.log(teslaV1.brand)
 
 
 function getFullName(firstName:string, lastName: string): string {
-    return firstName+" "+lastName;
+    //return firstName+" "+lastName;
+    return `${firstName} ${lastName}`
 }
 
 console.log(getFullName("Abu","Qais"));
+
 
 
 
@@ -54,9 +56,12 @@ console.log(cityName)
 
 
 
-let ID: string | number ="khan"
-console.log("1",ID)
-ID = 77
-console.log("2",ID)
-ID = "dominance"
-console.log("3",ID)
+type ID = string | number
+
+let userId1: ID = 77
+console.log("2",userId1)
+let userId2: ID = "dominance"
+console.log("3",userId2)
+
+
+//to run a file: npx ts-node --esm src/practice.ts
