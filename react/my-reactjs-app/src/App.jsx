@@ -5,6 +5,7 @@
 // import Student from './Student.jsx'
 import Button from './Button.jsx';
 import List from './List.jsx'
+import ProfilePicture from './ProfilePicture.jsx';
 
 function App() {
   const fruits = [{id:1, name:"apple",calories:953},
@@ -28,12 +29,8 @@ function App() {
                   {id:6, name:"plum",calories:91}];
 
   return (<>
-        {/* {fruits.length > 0 ? <List items ={fruits} category ="Fruits"/> : null}
-        {Vegetables.length > 0 ? <List items ={Vegetables} category ="Vegetables"/>:null} */
-        fruits.length >0 && <List items ={fruits} category ="fruits"/>}
-       {/* {Vegetables.length >0 && <List items ={Vegetables} category ="Vegetables"/>} */}
-       {/* {fastFood.length >0 && <List items ={fastFood} category ="fastFood"/>} */}
        {<Button/>}
+       {<ProfilePicture/>}
         </>
   );
 }
@@ -45,3 +42,7 @@ export default App
       <Student name ="Umar" age ={26} isStudent = {true}></Student>
       <List/>
       <fruits/> */
+
+  /* {fruits.length > 0 ? <List items ={fruits} category ="Fruits"/> : null}
+        {Vegetables.length > 0 ? <List items ={Vegetables} category ="Vegetables"/>:null} */
+      //   fruits.length >0 && <List items ={fruits} category ="fruits"/>}
