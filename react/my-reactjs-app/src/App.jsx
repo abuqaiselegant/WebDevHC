@@ -3,6 +3,7 @@
 // import Food from './Food.jsx'
 // import Card from './Card.jsx'
 // import Student from './Student.jsx'
+import Button from './Button.jsx';
 import List from './List.jsx'
 
 function App() {
@@ -30,8 +31,9 @@ function App() {
         {/* {fruits.length > 0 ? <List items ={fruits} category ="Fruits"/> : null}
         {Vegetables.length > 0 ? <List items ={Vegetables} category ="Vegetables"/>:null} */
         fruits.length >0 && <List items ={fruits} category ="fruits"/>}
-       {Vegetables.length >0 && <List items ={Vegetables} category ="Vegetables"/>}
-       {fastFood.length >0 && <List items ={fastFood} category ="fastFood"/>}
+       {/* {Vegetables.length >0 && <List items ={Vegetables} category ="Vegetables"/>} */}
+       {/* {fastFood.length >0 && <List items ={fastFood} category ="fastFood"/>} */}
+       {<Button/>}
         </>
   );
 }
