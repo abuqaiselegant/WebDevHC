@@ -13,6 +13,7 @@
 import Button from './Button.jsx';
 import List from './List.jsx'
 import ProfilePicture from './ProfilePicture.jsx';
+import MyComponents from './MyComponents.jsx'
 
 function App() {
   const fruits = [{id:1, name:"apple",calories:953},
@@ -38,6 +39,7 @@ function App() {
   return (<>
        {<Button/>}
        {<ProfilePicture/>}
+       {<MyComponents/>}
         </>
   );
 }
