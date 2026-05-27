@@ -3,6 +3,13 @@
 // import Food from './Food.jsx'
 // import Card from './Card.jsx'
 // import Student from './Student.jsx'
+
+
+
+//  react hook - special function that allows functional components to use react features without writing class components(useState, useEffect, useContext, useReducer, useCallback)
+//useState() = A React hook that allows the creation of a stateful variable and a setter funciton to update its value in the virtual dom.
+
+
 import Button from './Button.jsx';
 import List from './List.jsx'
 import ProfilePicture from './ProfilePicture.jsx';
