@@ -10,7 +10,7 @@ function MyComponent(){
         setName("Spongebob")
     }
     const incrementAge = () =>{
-        setAge(age+3);
+        setAge(age+1);
     }
     return (
         <div>
