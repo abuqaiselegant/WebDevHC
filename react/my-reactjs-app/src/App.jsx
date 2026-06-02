@@ -42,7 +42,6 @@ function App() {
        {<MyComponents/>}
        {<List items ={fruits} category ="Fruits"/>}
        {<List items ={Vegetables} category ="Vegetables"/>}
-       
        {<List items ={fastFood} category ="Fast Food"/>}
         </>
   );
