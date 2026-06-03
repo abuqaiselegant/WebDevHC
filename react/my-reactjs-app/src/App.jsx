@@ -5,7 +5,6 @@
 // import Student from './Student.jsx'
 
 
-
 //  react hook - special function that allows functional components to use react features without writing class components(useState, useEffect, useContext, useReducer, useCallback)
 //useState() = A React hook that allows the creation of a stateful variable and a setter funciton to update its value in the virtual dom.
 
@@ -42,7 +41,7 @@ function App() {
        {<MyComponents/>}
        {<List items ={fruits} category ="Fruits"/>}
        {<List items ={Vegetables} category ="Vegetables"/>}
-       {<List items ={fastFood} category ="Fast Food"/>}
+       {<List items ={fastFood} category ="Fast dFood"/>}
         </>
   );
 }
