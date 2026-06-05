@@ -42,6 +42,9 @@ function App() {
        {<List items ={fruits} category ="Fruits"/>}
        {<List items ={Vegetables} category ="Vegetables"/>}
        {<List items ={fastFood} category ="Fast Food"/>}
+       {<List items ={fruits} category ="Fruits"/>}
+       {<List items ={Vegetables} category ="Vegetables"/>}
+       {<List items ={fastFood} category ="Fast Food"/>}
         </>
   );
 }
