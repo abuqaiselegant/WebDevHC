@@ -39,7 +39,7 @@ function App() {
     {id:2, name:"kurkure",calories:95},
     {id:3, name:"celery",calories:511},
     {id:4, name:"peanut",calories:315},
-    {id:5, name:"carrots",calories:35},
+    {id:5, name:"carrots",calories:335},
     {id:6, name:"plum",calories:91}];
   return (<>
        {<Button/>}
